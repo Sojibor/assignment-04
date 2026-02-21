@@ -63,7 +63,7 @@ function renderJobs(filter = 'all') {
         card.className = `bg-white p-6 rounded-lg shadow-sm relative transition-all ${borderStyle}`;
         
         card.innerHTML = `
-            <button onclick="deleteJob(${job.id})" class="absolute top-4 right-4 text-gray-400 hover:text-red-500">🗑️</button>
+            <button onclick="deleteJob(${job.id})" class="absolute top-4 right-4 text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button>
             <h3 class="font-bold text-lg text-slate-800">${job.company}</h3>
             <p class="font-medium text-slate-600 mb-1">${job.role}</p>
             <div class="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
