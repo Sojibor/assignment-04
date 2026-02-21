@@ -28,7 +28,10 @@ function renderJobs(filter = 'all') {
     
     const filteredJobs = (filter === 'all') ? jobs : jobs.filter(job => job.status === filter);
     
-
+    // Counters
+    document.getElementById('total-count').innerText = jobs.length;
+    document.getElementById('interview-count').innerText = jobs.filter(j => j.status === 'interview').length;
+    document.getElementById('rejected-count').innerText = jobs.filter(j => j.status === 'rejected').length;
     
     // Available Jobs
     const tabCount = document.getElementById('tab-count');
@@ -53,7 +56,6 @@ function renderJobs(filter = 'all') {
         }
 
         const card = document.createElement('div');
-        
         // Border-left color logic
         const borderStyle = job.status === 'interview' ? 'border-l-4 border-l-green-500' : 
                              job.status === 'rejected' ? 'border-l-4 border-l-red-500' : 'border';
