@@ -16,3 +16,68 @@ let jobs = [
     { id: 14, company: "FinTech Hub", role: "Blockchain Developer", location: "Miami, FL", type: "Full-time", salary: "$150k - $200k", desc: "Write secure smart contracts.", status: "none" },
     { id: 15, company: "HealthCore", role: "Product Manager", location: "Remote", type: "Full-time", salary: "$140k - $185k", desc: "Deliver healthcare software solutions.", status: "none" }
 ];
+
+
+let currentFilter = 'all';
+
+// 2. Render Function
+function renderJobs(filter = 'all') {
+    currentFilter = filter;
+    const container = document.getElementById('job-container');
+    const emptyState = document.getElementById('empty-state');
+    
+    const filteredJobs = (filter === 'all') ? jobs : jobs.filter(job => job.status === filter);
+    
+
+    
+    // Available Jobs
+    const tabCount = document.getElementById('tab-count');
+    if (tabCount) tabCount.innerText = `${filteredJobs.length} jobs`;
+
+    container.innerHTML = '';
+
+    if (filteredJobs.length === 0 && emptyState) {
+        emptyState.classList.remove('hidden');
+        return;
+    }
+    if (emptyState) emptyState.classList.add('hidden');
+
+    filteredJobs.forEach(job => {
+        let badgeHTML = '';
+        if (job.status === 'interview') {
+            badgeHTML = `<span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block uppercase border border-green-200">Interview</span>`;
+        } else if (job.status === 'rejected') {
+            badgeHTML = `<span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block uppercase border border-red-200">Rejected</span>`;
+        } else {
+            badgeHTML = `<span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block uppercase border border-gray-200">Not Applied</span>`;
+        }
+
+        const card = document.createElement('div');
+        
+
+        
+        card.innerHTML = `
+            <button onclick="deleteJob(${job.id})" class="absolute top-4 right-4 text-gray-400 hover:text-red-500">🗑️</button>
+            <h3 class="font-bold text-lg text-slate-800">${job.company}</h3>
+            <p class="font-medium text-slate-600 mb-1">${job.role}</p>
+            <div class="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
+                <span>${job.location}</span> • <span>${job.type}</span> • <span>${job.salary}</span>
+            </div>
+            
+            ${badgeHTML} 
+            
+            <p class="text-sm text-gray-600 mb-6">${job.desc}</p>
+            <div class="flex gap-3">
+                <button onclick="updateStatus(${job.id}, 'interview')" 
+                    class="btn btn-sm btn-outline btn-success ${job.status === 'interview' ? 'bg-green-500 text-white border-green-500' : ''}">
+                    Interview
+                </button>
+                <button onclick="updateStatus(${job.id}, 'rejected')" 
+                    class="btn btn-sm btn-outline btn-error ${job.status === 'rejected' ? 'bg-red-500 text-white border-red-500' : ''}">
+                    Rejected
+                </button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+};
