@@ -81,3 +81,26 @@ function renderJobs(filter = 'all') {
         container.appendChild(card);
     });
 };
+
+// 3. Logic Functions
+window.updateStatus = (id, newStatus) => {
+    const job = jobs.find(j => j.id === id);
+    if (job) {
+        job.status = newStatus; 
+        renderJobs(currentFilter);
+    }
+};
+
+window.deleteJob = (id) => {
+    jobs = jobs.filter(j => j.id !== id);
+    renderJobs(currentFilter);
+};
+
+window.filterJobs = (filter, event) => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('btn-primary', 'text-white'));
+    if (event) event.target.classList.add('btn-primary', 'text-white');
+    renderJobs(filter);
+};
+
+renderJobs();
