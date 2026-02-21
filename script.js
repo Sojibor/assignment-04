@@ -54,7 +54,11 @@ function renderJobs(filter = 'all') {
 
         const card = document.createElement('div');
         
-
+        // Border-left color logic
+        const borderStyle = job.status === 'interview' ? 'border-l-4 border-l-green-500' : 
+                             job.status === 'rejected' ? 'border-l-4 border-l-red-500' : 'border';
+        
+        card.className = `bg-white p-6 rounded-lg shadow-sm relative transition-all ${borderStyle}`;
         
         card.innerHTML = `
             <button onclick="deleteJob(${job.id})" class="absolute top-4 right-4 text-gray-400 hover:text-red-500">🗑️</button>
@@ -80,7 +84,7 @@ function renderJobs(filter = 'all') {
         `;
         container.appendChild(card);
     });
-};
+}
 
 // 3. Logic Functions
 window.updateStatus = (id, newStatus) => {
